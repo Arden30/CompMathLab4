@@ -21,10 +21,10 @@ public class ReadFromConsole implements Readable {
                 dots.add(dot);
             }
 
-            if (dots.size() >= 8) {
+            if (dots.size() > 0) {
                 return dots;
             } else {
-                printString("Количество точек должно быть не меньше 8, попробуйте ещё раз");
+                printString("Количество точек должно быть не меньше 1, попробуйте ещё раз");
                 scanner.next();
             }
         }

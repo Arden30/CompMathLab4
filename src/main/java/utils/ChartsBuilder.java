@@ -1,6 +1,7 @@
 package utils;
 
 import approximations.Approximation;
+import model.Dot;
 import model.Result;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -14,10 +15,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.List;
 
 public class ChartsBuilder extends JFrame {
-    public ChartsBuilder(List<Approximation> approximationList, List<Result> results) {
+    public ChartsBuilder(List<Dot> dots, List<Approximation> approximationList, List<Result> results) {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -26,12 +28,19 @@ public class ChartsBuilder extends JFrame {
         // Создание набора данных для каждой функции
         for (int i = 0; i < approximationList.size(); i++) {
             XYSeries series = new XYSeries(approximationList.get(i).function(results.get(i).coefficients()));
-            for (double x = -10.0; x <= 10.0; x += 0.1) {
+            for (double x = -15.0; x <= 15.0; x += 0.1) {
                 double y = approximationList.get(i).value(x, results.get(i).coefficients());
                 series.add(x, y);
             }
             dataset.addSeries(series);
         }
+
+        // Создание набора данных для точек
+        XYSeries pointsSeries = new XYSeries("Точки");
+        for (Dot dot : dots) {
+            pointsSeries.add(dot.x(), dot.y());
+        }
+        dataset.addSeries(pointsSeries);
 
         // Создание графика
         JFreeChart chart = ChartFactory.createXYLineChart(
@@ -39,7 +48,7 @@ public class ChartsBuilder extends JFrame {
                 dataset
         );
 
-        chart.getXYPlot().getDomainAxis().setRange(-10, 10);
+        chart.getXYPlot().getDomainAxis().setRange(-15, 15);
         chart.getXYPlot().getRangeAxis().setRange(-5, 25);
 
         NumberAxis xAxis = (NumberAxis) chart.getXYPlot().getDomainAxis();
@@ -59,13 +68,19 @@ public class ChartsBuilder extends JFrame {
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
         renderer.setStroke(new BasicStroke(2)); // Установите желаемую толщину линии здесь
 
+        // Настройка отображения точек
+        renderer.setSeriesLinesVisible(approximationList.size(), false); // Отключаем соединение линиями для точек
+        renderer.setSeriesShapesVisible(approximationList.size(), true); // Включаем отображение формы для точек
+        renderer.setSeriesShape(approximationList.size(), new Ellipse2D.Double(-2, -2, 8, 8)); // Задаем форму точки (в данном случае - круг)
+        renderer.setSeriesPaint(approximationList.size(), Color.RED); // Задаем цвет точек
+
+
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(800, 600));
+        chartPanel.setPreferredSize(new Dimension(1100, 630));
         add(chartPanel, BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
-
 }

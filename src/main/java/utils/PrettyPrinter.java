@@ -32,7 +32,7 @@ public class PrettyPrinter {
 
     public static void printResultInConsole(Result result) {
         printString(getApproximationCoefficients(result));
-        printString("Стандартное отклонение: s = " + String.format("%.5f", result.standardDeviation()));
+        printString("Мера отклонения: s = " + String.format("%.5f", result.standardDeviation()));
         printString("Среднеквадратичное отклонение: " + String.format("%.5f", result.squareDeviation()));
         printString(getApproximationDots(result));
         printString(getApproximationFunctionValues(result));
@@ -43,7 +43,7 @@ public class PrettyPrinter {
     public static void printResultInFile(Result result, Path path) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path.toString(), true))) {
             bufferedWriter.write(getApproximationCoefficients(result));
-            bufferedWriter.write("Стандартное отклонение: " + String.format("%.5f", result.standardDeviation()) + "\n");
+            bufferedWriter.write("Мера отклонения: " + String.format("%.5f", result.standardDeviation()) + "\n");
             bufferedWriter.write("Среднеквадратичное отклонение: " + String.format("%.5f", result.squareDeviation()) + "\n");
             bufferedWriter.write(getApproximationDots(result) + "\n");
             bufferedWriter.write(getApproximationFunctionValues(result) + "\n");

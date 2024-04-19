@@ -20,7 +20,7 @@ public class PowerApproximation implements Approximation {
         double a = coefficients.get(1);
         double b = coefficients.get(0);
 
-        return String.format("%.5f", a) + " x^" + String.format("%.5f", b);
+        return String.format("%.5f", a) + "x^" + String.format("%.5f", b);
     }
 
     @Override

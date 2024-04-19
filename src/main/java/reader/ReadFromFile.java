@@ -26,8 +26,8 @@ public class ReadFromFile implements Readable {
                 dots.add(dot);
             }
 
-            if (dots.size() < 7) {
-                printString("Количество точек должно быть не меньше 8, обновите файл");
+            if (dots.size() < 1) {
+                printString("Количество точек должно быть не меньше 1, обновите файл");
                 System.exit(1);
             }
         } catch (IOException e) {

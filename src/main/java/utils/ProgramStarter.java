@@ -92,7 +92,7 @@ public class ProgramStarter {
                     }
                 }
 
-                SwingUtilities.invokeLater(() -> new ChartsBuilder(doneApproximations, results));
+                SwingUtilities.invokeLater(() -> new ChartsBuilder(dots, doneApproximations, results));
 
                 if (scanner.hasNext()) {
                     System.exit(0);

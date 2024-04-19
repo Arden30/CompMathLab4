@@ -11,7 +11,7 @@ import static system_solver.SystemSolver.*;
 public class LinearApproximation implements Approximation {
     @Override
     public String name() {
-        return "Линейная аппроксимация (ax + b)";
+        return "Линейная аппроксимация (a0*x + a1)";
     }
 
     @Override
